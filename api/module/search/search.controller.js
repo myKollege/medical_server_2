@@ -21,19 +21,26 @@ const searchAllData = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     try {
         const { name, city } = req.query;
         const doctors = yield doctors_model_1.default.find({
-            name: { $regex: name, $options: "i" },
+            $or: [
+                { name: { $regex: name, $options: "i" } },
+                { tags: { $elemMatch: { $regex: name, $options: "i" } } },
+                { specialization: { $regex: name, $options: "i" } },
+            ],
         })
             .sort({ name: 1 })
-            .limit(2);
+            .limit(3);
         const products = yield medicine_model_1.default.find({
-            name: { $regex: name, $options: "i" },
+            $or: [
+                { name: { $regex: name, $options: "i" } },
+                { genericName: { $regex: name, $options: "i" } },
+            ],
         })
             .sort({ name: 1 })
-            .limit(2);
+            .limit(3);
         const hospitals = yield ((_a = hospital_model_1.default.find({
             hospitalName: { $regex: name, $options: "i" },
         })
-            .sort({ name: 1 })) === null || _a === void 0 ? void 0 : _a.limit(2));
+            .sort({ name: 1 })) === null || _a === void 0 ? void 0 : _a.limit(3));
         // // Check if users exist
         // Sending response
         return res.status(404).json({

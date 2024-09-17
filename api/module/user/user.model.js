@@ -47,6 +47,12 @@ const userSchema = new mongoose_1.Schema({
     serviceCategoryId: {
         type: String,
     },
+    serviceSubCategoryName: {
+        type: [String],
+    },
+    serviceSubCategoryId: {
+        type: [String],
+    },
     email: {
         type: String,
         unique: true,
@@ -125,10 +131,20 @@ const userSchema = new mongoose_1.Schema({
     },
     hasPatients: [
         {
+            id: String,
             name: String,
             age: String,
             phone: String,
             note: String,
+        },
+    ],
+    hasShippingAddress: [
+        {
+            id: String,
+            address: String,
+            email: String,
+            phone: String,
+            zipCode: String,
         },
     ],
 });

@@ -65,6 +65,8 @@ const DoctorSchema = new mongoose_1.Schema({
         type: [
             {
                 userId: { type: String },
+                userImage: { type: String },
+                userName: { type: String },
                 rating: { type: Number },
                 review: { type: String },
             },

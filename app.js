@@ -23,6 +23,7 @@ const appointment_route_1 = __importDefault(require("./api/module/appointment/ap
 const jobPost_route_1 = __importDefault(require("./api/module/jobPost/jobPost.route"));
 const applications_route_1 = __importDefault(require("./api/module/applications/applications.route"));
 const search_route_1 = __importDefault(require("./api/module/search/search.route"));
+const serviceRequest_route_1 = __importDefault(require("./api/module/serviceRequest/serviceRequest.route"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 //middle ware
@@ -45,4 +46,5 @@ app.use("/api/v1/appointment", appointment_route_1.default);
 app.use("/api/v1/reviews", reviews_route_1.default);
 app.use("/api/v1/applications", applications_route_1.default);
 app.use("/api/v1/search", search_route_1.default);
+app.use("/api/v1/service_requests", serviceRequest_route_1.default);
 exports.default = app;

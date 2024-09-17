@@ -51,14 +51,14 @@ exports.createHospitalDoctor = createHospitalDoctor;
 // ==================== get all ================================
 const getDoctor = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, sort, id, page, limit, userId, userIds, hospitalId } = req.query;
+        const { name, sort, id, query, page, limit, userId, userIds, hospitalId } = req.query;
         // Setting default values for page and limit
         const pageNumber = parseInt(page, 10) || 1;
         const pageSize = parseInt(limit, 10) || 10;
         // Calculate skip value for pagination
         const skip = (pageNumber - 1) * pageSize;
         // Getting data
-        const result = yield (0, doctors_service_1.getDoctorFromDB)(name, sort, id, skip, limit, userId, userIds, hospitalId);
+        const result = yield (0, doctors_service_1.getDoctorFromDB)(name, sort, id, skip, limit, userId, userIds, hospitalId, query);
         // Check if Doctors exist
         if (!result || result.length === 0) {
             // Sending response ============
@@ -108,6 +108,7 @@ exports.getDoctorWithUserIds = getDoctorWithUserIds;
 const updateDoctor = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const data = req.body;
+    console.log(id, data, "ppppppppppppp");
     const updatedReimbursement = yield (0, doctors_service_1.updateDoctorInDB)(id, data);
     res.status(200).json({
         status: "success",

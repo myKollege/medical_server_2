@@ -48,12 +48,19 @@ const createHospitalDoctorToDB = (payload) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.createHospitalDoctorToDB = createHospitalDoctorToDB;
-const getDoctorFromDB = (nameQuery, sortQuery, idQuery, skip, limit, userId, userIds, hospitalId) => __awaiter(void 0, void 0, void 0, function* () {
+const getDoctorFromDB = (nameQuery, sortQuery, idQuery, skip, limit, userId, userIds, hospitalId, allQuery) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let query = {};
         // If name is provided, filter by name
         if (nameQuery) {
             query.name = { $regex: nameQuery, $options: "i" };
+        }
+        if (allQuery) {
+            query.$or = [
+                { name: { $regex: allQuery, $options: "i" } },
+                { specialization: { $regex: allQuery, $options: "i" } },
+                { tags: { $elemMatch: { $regex: allQuery, $options: "i" } } },
+            ];
         }
         if (idQuery) {
             query._id = idQuery;
@@ -141,11 +148,14 @@ const getAllDoctorFromDB = (name, id, phone, eventId, eventDoctorId) => __awaite
 exports.getAllDoctorFromDB = getAllDoctorFromDB;
 const updateDoctorInDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // console.log(id, payload, "---- 000 --- 000 ---  888 --- 444 ");
+        // const { _id, ...updatedPayload } = payload;
+        // const newData = payload?.map(item =>{
+        //   return
+        // } )
         // const updatedDoctor = await Doctor.findByIdAndUpdate(id, payload, {
         //   new: true,
         // });
-        const updatedDoctor = yield doctors_model_1.default.findOneAndUpdate({ userId: id }, payload, { new: true });
+        const updatedDoctor = yield doctors_model_1.default.findOneAndUpdate({ userId: id }, { $set: payload }, { new: true });
         console.log(updatedDoctor, "000  ======  000");
         return updatedDoctor;
     }

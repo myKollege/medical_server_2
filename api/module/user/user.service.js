@@ -96,7 +96,7 @@ const getAllUserFromDB = (name, id, phone, eventId, eventUserId) => __awaiter(vo
 exports.getAllUserFromDB = getAllUserFromDB;
 const updateUserInDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // console.log(id, payload);
+        console.log(id, payload);
         const updatedUser = yield user_model_1.default.findByIdAndUpdate(id, payload, {
             new: true,
         });

@@ -164,7 +164,6 @@ const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const { id } = req.params;
         const data = req.body;
         const updatedUser = yield (0, user_service_1.updateUserInDB)(id, data);
-        console.log(updatedUser, "------------ +++++++++", id);
         res.status(200).json({
             status: "success",
             data: updatedUser,
