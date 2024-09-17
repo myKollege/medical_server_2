@@ -52,7 +52,7 @@ function connectToDB() {
       //   "mongodb+srv://tausif:PV8j2miiqnBvwIvu@cluster0.etgpuim.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
       // );
       yield mongoose_1.default.connect(
-        "mongodb+srv://tausif:PV8j2miiqnBvwIvu@cluster0.etgpuim.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+        "mongodb+srv://tausif:129400@cluster0.py2yd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
       );
       console.log("connected to db");
       // ============== starting the server ==============
