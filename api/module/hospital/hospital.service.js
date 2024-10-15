@@ -26,7 +26,7 @@ const createHospitalToDB = (payload) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.createHospitalToDB = createHospitalToDB;
-const getHospitalFromDB = (nameQuery, sortQuery, idQuery, skip, limit, userId) => __awaiter(void 0, void 0, void 0, function* () {
+const getHospitalFromDB = (nameQuery, sortQuery, idQuery, skip, limit, userId, state, city) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let query = {};
         // If name is provided, filter by name
@@ -38,6 +38,11 @@ const getHospitalFromDB = (nameQuery, sortQuery, idQuery, skip, limit, userId) =
         }
         if (userId) {
             query.userId = userId;
+        }
+        if (city || state) {
+            query.location = {
+                $elemMatch: Object.assign(Object.assign({}, (city && { city: { $regex: city, $options: "i" } })), (state && { state: { $regex: state, $options: "i" } })),
+            };
         }
         // Sorting based on sortQuery
         let sort = { created_at: 1 }; // Default

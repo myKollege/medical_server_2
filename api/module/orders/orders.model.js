@@ -24,49 +24,42 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const AppointmentSchema = new mongoose_1.Schema({
-    // Consumer details
+const OrderSchema = new mongoose_1.Schema({
+    // Consumer fields
     servicesReceiverId: { type: String },
     servicesReceiverName: { type: String },
     servicesReceiverPhoneNumber: { type: String },
-    servicesReceiverGender: { type: String },
-    servicesReceiverAge: { type: String },
     servicesReceiverNotes: { type: String },
-    // Provider details
+    servicesReceiverAddress: { type: String },
+    servicesReceiverEmail: { type: String },
+    // Provider fields
     serviceProviderId: { type: String },
     serviceProviderName: { type: String },
     serviceProviderPhoneNumber: { type: String },
-    serviceSpecialization: { type: String },
     serviceLocation: { type: String },
-    image: { type: String },
+    image: { type: String, required: false }, // Optional image field
+    // Product fields
+    productName: { type: String },
+    productId: { type: String },
+    productCategory: { type: String },
+    price: { type: String },
+    quantity: { type: Number },
     status: {
         type: String,
-        enum: ["pending", "canceled", "completed"],
+        enum: ["pending", "onTheWay", "delivered", "canceled", "returned"],
     },
-    type: {
+    deliveryOption: {
         type: String,
-        required: true,
-        enum: ["bed", "doctor", "service"],
+        enum: ["cashOnDelivery", ""],
     },
-    // Appointment details (day, date, and time)
-    // day: { type: DayOfWeek },
-    date: { type: String },
-    time: { type: String },
-    startTime: { type: String },
-    endTime: { type: String },
-    // Payment details
-    paymentType: {
-        type: String,
-        // required: true,
-        enum: ["onArrival", "onBooking"],
-    },
-    paymentStatus: {
-        type: String,
-        // required: true,
-        enum: ["paid", "pending", "canceled", "completed", "refunded"],
-    },
-    paymentAmount: { type: Number },
-    paymentDateTime: { type: Date },
+    // Conversions (Messages between provider and receiver)
+    conversions: [
+        {
+            user: { type: String, enum: ["provider", "receiver"] },
+            message: { type: String },
+            id: { type: String },
+        },
+    ],
 });
-const Appointment = mongoose_1.default.model("Appointment", AppointmentSchema);
-exports.default = Appointment;
+const Order = mongoose_1.default.model("Order", OrderSchema);
+exports.default = Order;

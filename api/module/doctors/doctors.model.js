@@ -27,6 +27,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const DoctorSchema = new mongoose_1.Schema({
     userId: { type: String },
     name: { type: String },
+    gender: { type: String },
     chamberName: { type: String },
     hospitalId: { type: String },
     specialization: { type: String },

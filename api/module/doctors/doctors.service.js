@@ -48,13 +48,17 @@ const createHospitalDoctorToDB = (payload) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.createHospitalDoctorToDB = createHospitalDoctorToDB;
-const getDoctorFromDB = (nameQuery, sortQuery, idQuery, skip, limit, userId, userIds, hospitalId, allQuery) => __awaiter(void 0, void 0, void 0, function* () {
+const getDoctorFromDB = (nameQuery, sortQuery, idQuery, skip, limit, userId, userIds, hospitalId, allQuery, state, city, gender, rating) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let query = {};
         // If name is provided, filter by name
         if (nameQuery) {
             query.name = { $regex: nameQuery, $options: "i" };
         }
+        if (gender) {
+            query.gender = gender;
+        }
+        // Filter using the general 'allQuery'
         if (allQuery) {
             query.$or = [
                 { name: { $regex: allQuery, $options: "i" } },
@@ -74,18 +78,23 @@ const getDoctorFromDB = (nameQuery, sortQuery, idQuery, skip, limit, userId, use
         if (userIds && userIds.length > 0) {
             query._id = { $in: userIds };
         }
-        // Sorting based on sortQuery
+        // Filter by city and state in chamberLocation
+        if (city || state) {
+            query.chamberLocation = {
+                $elemMatch: Object.assign(Object.assign({}, (city && { city: { $regex: city, $options: "i" } })), (state && { state: { $regex: state, $options: "i" } })),
+            };
+        }
+        // Add sorting based on sortQuery
         let sort = { created_at: 1 }; // Default
         if (sortQuery && sortQuery.toLowerCase() === "desc") {
             sort = { created_at: -1 }; // descending order
         }
+        // Add pagination with skip and limit
         let result;
         if (limit) {
-            // Apply pagination
             result = yield doctors_model_1.default.find(query).sort(sort).skip(skip).limit(limit);
         }
         else {
-            // Apply pagination
             result = yield doctors_model_1.default.find(query).sort(sort);
         }
         return result;
@@ -156,7 +165,6 @@ const updateDoctorInDB = (id, payload) => __awaiter(void 0, void 0, void 0, func
         //   new: true,
         // });
         const updatedDoctor = yield doctors_model_1.default.findOneAndUpdate({ userId: id }, { $set: payload }, { new: true });
-        console.log(updatedDoctor, "000  ======  000");
         return updatedDoctor;
     }
     catch (error) {

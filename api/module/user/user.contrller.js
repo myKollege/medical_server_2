@@ -35,6 +35,15 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 message: "User Type is required",
             });
         }
+        // Getting data
+        const user = yield user_model_1.default.findOne({ email: data === null || data === void 0 ? void 0 : data.email });
+        // Check if folders exist
+        if (user) {
+            return res.status(404).json({
+                message: "An account already exists for this email address",
+                data: null,
+            });
+        }
         if ((data === null || data === void 0 ? void 0 : data.userType) == "civil") {
             result = yield (0, user_service_1.createUserToDB)(Object.assign(Object.assign({}, data), { accountStatus: "approved" }));
         }
@@ -98,14 +107,14 @@ const createBulkUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 exports.createBulkUser = createBulkUser;
 const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, sort, id, phone, page, limit, type, serviceCategoryId } = req.query;
+        const { name, sort, id, phone, page, limit, type, serviceCategoryId, serviceSubCategoryName, } = req.query;
         // Setting default values for page and limit
         const pageNumber = parseInt(page, 10) || 1;
         const pageSize = parseInt(limit, 10) || 10;
         // Calculate skip value for pagination
         const skip = (pageNumber - 1) * pageSize;
         // Getting data
-        const result = yield (0, user_service_1.getUserFromDB)(name, sort, id, phone, skip, pageSize, type, serviceCategoryId);
+        const result = yield (0, user_service_1.getUserFromDB)(name, sort, id, phone, skip, pageSize, type, serviceCategoryId, serviceSubCategoryName);
         // Check if users exist
         if (!result || result.length === 0) {
             // Sending response
@@ -132,7 +141,6 @@ exports.getUser = getUser;
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
-        console.log(email, password, "-------------");
         // Getting data
         const user = yield user_model_1.default.findOne({ email });
         // Check if folders exist

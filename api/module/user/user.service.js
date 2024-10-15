@@ -26,12 +26,21 @@ const createUserToDB = (payload) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.createUserToDB = createUserToDB;
-const getUserFromDB = (nameQuery, sortQuery, idQuery, phoneQuery, skip, limit, type, serviceCategoryId) => __awaiter(void 0, void 0, void 0, function* () {
+const getUserFromDB = (nameQuery, sortQuery, idQuery, phoneQuery, skip, limit, type, serviceCategoryId, serviceSubCategoryName) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let query = {};
         // If name is provided, filter by name
         if (nameQuery) {
-            query.fullName = { $regex: nameQuery, $options: "i" };
+            query.$or = [
+                { fullName: { $regex: nameQuery, $options: "i" } },
+                { serviceSubCategoryName: { $regex: nameQuery, $options: "i" } },
+            ];
+        }
+        if (serviceSubCategoryName) {
+            query.serviceSubCategoryName = {
+                $regex: serviceSubCategoryName,
+                $options: "i",
+            };
         }
         if (idQuery) {
             query._id = idQuery;
