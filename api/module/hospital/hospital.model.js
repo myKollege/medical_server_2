@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const HospitalSchema = new mongoose_1.Schema({
     hospitalId: { type: String },
-    userId: { type: String, required: true, unique: true },
+    userId: { type: String, required: true },
     hospitalName: { type: String },
     hospitalAddress: { type: String },
     description: { type: String },
@@ -88,7 +88,7 @@ const HospitalSchema = new mongoose_1.Schema({
     insuranceNetwork: { type: [String] },
     location: {
         city: { type: String },
-        state: { type: Number },
+        state: { type: String },
         latitude: { type: String },
         longitude: { type: String },
         pinCode: { type: String },
@@ -109,7 +109,7 @@ const HospitalSchema = new mongoose_1.Schema({
                 id: { type: String },
                 serviceName: { type: String },
                 serviceType: { type: String },
-                serviceDescription: { type: Number },
+                serviceDescription: { type: String },
                 serviceStartPrice: { type: Number },
                 serviceEndPrice: { type: Number },
                 serviceDuration: { type: String },
@@ -119,7 +119,7 @@ const HospitalSchema = new mongoose_1.Schema({
     },
 });
 // Define indexes directly on the schema
-HospitalSchema.index({ hospitalName: "text" });
+// HospitalSchema.index({ hospitalName: "text" });
 const Hospital = mongoose_1.default.model("Hospital", HospitalSchema);
 // Ensure indexes
 Hospital.ensureIndexes();

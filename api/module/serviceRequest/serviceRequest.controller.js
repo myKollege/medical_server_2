@@ -75,6 +75,7 @@ exports.updateServiceRequest = updateServiceRequest;
 const deleteItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
+        console.log("hre ==============>", id);
         const result = yield (0, serviceRequest_service_1.deleteFromDb)(id);
         if (!result) {
             return res.status(404).json({ error: "Item not found" });

@@ -95,7 +95,10 @@ const getAllHospitalFromDB = (name, sort, id, skip, limit, userId) => __awaiter(
 exports.getAllHospitalFromDB = getAllHospitalFromDB;
 const updateHospitalInDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(id, payload);
+        // if (payload._id) {
+        //   delete payload._id;
+        // }
+        console === null || console === void 0 ? void 0 : console.log(id, "ppppppppppppppppppppppppppppppppppppppppp");
         const updatedHospital = yield hospital_model_1.default.findByIdAndUpdate(id, payload, {
             new: true,
         });

@@ -67,7 +67,7 @@ const updateHospital = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     const { id } = req.params;
     const data = req.body;
     const updatedReimbursement = yield (0, hospital_service_1.updateHospitalInDB)(id, data);
-    console.log(updatedReimbursement === null || updatedReimbursement === void 0 ? void 0 : updatedReimbursement.ratings, "--==== 8888888888  ----  88888888  ====--");
+    console.log(updatedReimbursement, "--==== 8888888888  ----  88888888  ====--");
     res.status(200).json({
         status: "success",
         data: updatedReimbursement,
