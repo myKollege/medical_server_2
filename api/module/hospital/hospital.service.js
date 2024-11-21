@@ -98,10 +98,10 @@ const updateHospitalInDB = (id, payload) => __awaiter(void 0, void 0, void 0, fu
         // if (payload._id) {
         //   delete payload._id;
         // }
-        console === null || console === void 0 ? void 0 : console.log(id, "ppppppppppppppppppppppppppppppppppppppppp");
-        const updatedHospital = yield hospital_model_1.default.findByIdAndUpdate(id, payload, {
-            new: true,
-        });
+        // const updatedHospital = await Hospital.findByIdAndUpdate(id, payload, {
+        //   new: true,
+        // });
+        const updatedHospital = yield hospital_model_1.default.findOneAndUpdate({ userId: id }, { $set: payload }, { new: true });
         return updatedHospital;
     }
     catch (error) {

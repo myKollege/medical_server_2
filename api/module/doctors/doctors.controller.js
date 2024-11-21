@@ -108,7 +108,6 @@ exports.getDoctorWithUserIds = getDoctorWithUserIds;
 const updateDoctor = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const data = req.body;
-    console.log(id, data, "ppppppppppppp");
     const updatedReimbursement = yield (0, doctors_service_1.updateDoctorInDB)(id, data);
     res.status(200).json({
         status: "success",

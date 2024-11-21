@@ -39,13 +39,10 @@ const getPostFromDB = (nameQuery, sortQuery, idQuery, skip, limit, date, type) =
         if (idQuery) {
             query._id = idQuery;
         }
-        if (date) {
-            query.createdAt = { $lte: new Date(date) };
-        }
         // Sorting based on sortQuery
-        let sort = { created_at: 1 };
+        let sort = { createdAt: 1 };
         if (sortQuery && sortQuery.toLowerCase() === "desc") {
-            sort = { created_at: -1 };
+            sort = { createdAt: -1 };
         }
         let result;
         if (limit) {

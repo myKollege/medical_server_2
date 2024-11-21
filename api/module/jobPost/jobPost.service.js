@@ -31,7 +31,10 @@ const getPostFromDB = (nameQuery, sortQuery, idQuery, skip, limit, date, type, u
         let query = {};
         // If name is provided, filter by name
         if (nameQuery) {
-            query.userName = { $regex: nameQuery, $options: "i" };
+            query.$or = [
+                { category: { $regex: nameQuery, $options: "i" } },
+                { jobTitle: { $regex: nameQuery, $options: "i" } },
+            ];
         }
         if (userId) {
             query.userId = userId;

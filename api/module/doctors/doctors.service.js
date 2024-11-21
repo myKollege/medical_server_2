@@ -109,7 +109,6 @@ const getDoctorFromDBByUserIds = (userIds) => __awaiter(void 0, void 0, void 0, 
     try {
         let query = {};
         let doctors = [];
-        console.log(userIds, "oooooooooooooooooooooooooooo");
         // Sorting based on sortQuery
         let sort = { created_at: 1 };
         if (userIds && userIds.length > 0) {
@@ -119,7 +118,6 @@ const getDoctorFromDBByUserIds = (userIds) => __awaiter(void 0, void 0, void 0, 
                 doctors.push(result);
             }));
         }
-        console.log(doctors, "------------------------");
         return doctors;
     }
     catch (error) {
@@ -164,7 +162,11 @@ const updateDoctorInDB = (id, payload) => __awaiter(void 0, void 0, void 0, func
         // const updatedDoctor = await Doctor.findByIdAndUpdate(id, payload, {
         //   new: true,
         // });
-        const updatedDoctor = yield doctors_model_1.default.findOneAndUpdate({ userId: id }, { $set: payload }, { new: true });
+        console.log(id, payload, 'ppppppppppppppp');
+        const updatedDoctor = yield doctors_model_1.default.findOneAndUpdate({ userId: id }, 
+        // { $or: [{ userId: id }, { _id: id }] },
+        { $set: payload }, { new: true });
+        console.log(updatedDoctor, '----------------------------------------------------');
         return updatedDoctor;
     }
     catch (error) {

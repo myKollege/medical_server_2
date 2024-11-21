@@ -50,7 +50,6 @@ const PostSchema = new mongoose_1.Schema({
     description: { type: String },
     imageUrl: { type: String },
     videoUrl: { type: String },
-    createdAt: { type: String },
     //like
     likeCount: { type: Number },
     likedByUser: {
@@ -72,6 +71,8 @@ const PostSchema = new mongoose_1.Schema({
             },
         ],
     },
+}, {
+    timestamps: true
 });
 const Post = mongoose_1.default.model("Post", PostSchema);
 exports.default = Post;

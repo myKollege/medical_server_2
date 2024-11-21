@@ -97,9 +97,11 @@ const HospitalSchema = new mongoose_1.Schema({
     ratings: {
         type: [
             {
-                userId: { type: String },
                 rating: { type: Number },
                 review: { type: String },
+                userId: { type: String },
+                userImage: { type: String },
+                userName: { type: String },
             },
         ],
     },
